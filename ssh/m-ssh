@@ -1,0 +1,59 @@
+#!/bin/bash
+clear
+
+GREEN='\e[1;32m'
+CYAN='\e[1;36m'
+YELLOW='\e[1;33m'
+RED='\e[1;31m'
+NC='\e[0m'
+
+echo -e "${CYAN}╔══════════════════════════════╗${NC}"
+echo -e "${CYAN}║         MENU SSH WS          ║${NC}"
+echo -e "${CYAN}╚══════════════════════════════╝${NC}"
+
+echo -e "${YELLOW} 1.${NC} Add SSH Account"
+echo -e "${YELLOW} 2.${NC} Trial SSH Account"
+echo -e "${YELLOW} 3.${NC} Renew SSH Account"
+echo -e "${YELLOW} 4.${NC} Delete SSH Account"
+echo -e "${YELLOW} 5.${NC} Check User Login"
+echo -e "${YELLOW} 6.${NC} List Member SSH"
+echo -e "${YELLOW} 7.${NC} Delete Expired SSH"
+echo -e "${YELLOW} 8.${NC} Check Service SSH"
+echo -e "${YELLOW} 9.${NC} Restart Service SSH"
+echo -e "${YELLOW} x.${NC} Exit to Main Menu"
+
+echo ""
+read -p "Select Menu : " x
+
+case $x in
+1) clear ; bash /etc/autoscriptvpn/ssh/addssh.sh ;;
+2) clear ; echo "Trial SSH - Coming Soon" ; sleep 2 ; exec m-ssh ;;
+3) clear ; echo "Renew SSH - Coming Soon" ; sleep 2 ; exec m-ssh ;;
+4) clear ; echo "Delete SSH - Coming Soon" ; sleep 2 ; exec m-ssh ;;
+5) clear ; echo "Check Login SSH - Coming Soon" ; sleep 2 ; exec m-ssh ;;
+6) clear ; echo "List Member SSH - Coming Soon" ; sleep 2 ; exec m-ssh ;;
+7) clear ; echo "Delete Expired SSH - Coming Soon" ; sleep 2 ; exec m-ssh ;;
+8) 
+    clear
+    systemctl status ssh --no-pager
+    echo ""
+    systemctl status dropbear --no-pager
+    echo ""
+    systemctl status ws-dropbear --no-pager
+    echo ""
+    systemctl status ws-stunnel --no-pager
+    echo ""
+    systemctl status udp-custom --no-pager
+    echo ""
+    systemctl status udpgw --no-pager
+    ;;
+9) 
+    clear
+    systemctl restart ssh dropbear ws-dropbear ws-stunnel udp-custom udpgw
+    echo -e "\n${GREEN}[ OK ] All SSH Services Restarted${NC}\n"
+    sleep 2
+    exec m-ssh
+    ;;
+x) menu ;;
+*) echo -e "${RED}❌ Pilihan salah!${NC}" ; sleep 1 ; exec m-ssh ;;
+esac

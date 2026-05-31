@@ -1,2 +1,259 @@
-# AutoscriptXRAY
-AutoscriptXRAY
+## Autoscript XRAY
+
+AutoScript VPN all-in-one
+
+Script modular dan interaktif untuk deploy:
+
+* SSH Websocket
+* XRAY Core
+* WireGuard
+* UDP Tunnel
+* Monitoring & Tools
+
+Dengan panel terminal interaktif modern dan struktur modular production-ready.
+
+---
+
+## Features
+
+### SSH Websocket
+
+* OpenSSH
+* Dropbear
+* SSH WS
+* SSH SSL WS
+* Enhanced Payload Support
+* UDP Custom Support
+* BadVPN UDPGW
+
+### XRAY Core
+
+* VMess WS + TLS
+* VLESS WS + TLS
+* Trojan WS + TLS
+* Shadowsocks WS
+* gRPC Support
+* NGINX Reverse Proxy
+* Auto SSL Certificate
+
+### WireGuard
+
+* WireGuard VPN
+* Client Generator
+* QRCode Support
+
+### UDP Tunnel
+
+* UDP Custom
+* ZIVPN UDP
+* BadVPN UDPGW
+
+### Tools
+
+* Backup Menu
+* Domain Menu
+* Speedtest
+* Running Service Checker
+* Traffic Monitor
+
+### UI
+
+* Interactive Terminal Panel
+* Colored Menu
+* Real-time Service Status
+* User Statistics
+* Traffic Statistics
+
+---
+
+## Screenshot
+
+Open menu:
+
+```bash
+menu
+```
+
+---
+
+## Quick Install
+
+> Note: This script must be run as root!
+
+```bash
+# update
+apt update -y && apt upgrade -y
+apt install git curl screen sudo -y
+
+# disable ipv6
+sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sysctl -w net.ipv6.conf.default.disable_ipv6=1
+
+# clone the repos
+git clone https://github.com/znandev/AutoscriptXRAY.git
+cd AutoscriptXRAY
+
+# run main installer
+chmod +x setup.sh
+chmod +x uninstall.sh
+screen -S setup ./setup.sh
+```
+
+---
+
+## Project Structure
+
+```bash
+AutoscriptXRAY/
+├── install/
+│   ├── nginx.sh
+│   ├── ssh.sh
+│   ├── wg.sh
+│   ├── xray.sh
+│   └── zivpn.sh
+│
+├── config/
+│   ├── issue.net
+│   ├── nginx.conf
+│   ├── xray.conf
+│   └── xray.json
+│
+├── ssh/
+│   ├── addssh.sh
+│   └── m-ssh
+│
+├── sshws/
+│   ├── ws-dropbear.py
+│   ├── ws-dropbear.service
+│   ├── ws-stunnel.py
+│   ├── ws-stunnel.service
+│   ├── udp-custom.service
+│   └── udpgw.service
+│
+├── udp/
+│   ├── add-zivpn.sh
+│   ├── del-zivpn.sh
+│   ├── renew-zivpn.sh
+│   ├── trial-zivpn.sh
+│   └── m-zivpn
+│
+├── wg/
+│   ├── m-wg
+│   ├── wg-add.sh
+│   ├── wg-del.sh
+│   └── wg-show.sh
+│
+├── xray/
+│   ├── m-vmess
+│   ├── m-vless
+│   ├── m-trojan
+│   ├── m-ssws
+│   ├── add-*.sh
+│   ├── del-*.sh
+│   ├── renew-*.sh
+│   └── cek-*.sh
+│
+├── tools/
+│   ├── tools-menu
+│   ├── backup.sh
+│   ├── domain.sh
+│   ├── running.sh
+│   └── speedtest.sh
+│
+├── menu.sh
+├── setup.sh
+├── uninstall.sh
+├── README.md
+└── LICENSE
+```
+
+---
+
+## Default Ports
+
+| Service        | Port    |
+| -------------- | ------- |
+| OpenSSH        | 22      |
+| Dropbear       | 109,143 |
+| SSH WS         | 2082    |
+| SSH SSL WS     | 2096    |
+| BadVPN UDPGW   | 7300    |
+| UDP Custom     | 1-65535 |
+| VMess TLS      | 443     |
+| VMess None TLS | 80      |
+| VLESS TLS      | 443     |
+| Trojan TLS     | 443     |
+| Shadowsocks WS | 443     |
+
+---
+
+## Debugging
+
+Check listening ports:
+
+```bash
+ss -tulpn
+```
+
+Check NGINX:
+
+```bash
+nginx -t
+systemctl status nginx
+```
+
+Check XRAY:
+
+```bash
+xray -test -config /etc/xray/config.json
+systemctl status xray
+```
+
+Check SSH WS:
+
+```bash
+systemctl status ws-dropbear
+systemctl status ws-stunnel
+```
+
+Check UDP Tunnel:
+
+```bash
+systemctl status udp-custom
+systemctl status udpgw
+```
+
+---
+
+## Compatibility
+
+| OS           | Status        |
+| ------------ | ------------- |
+| Debian 12    | ⭐ Recommended |
+| Debian 11    | ✅ Supported   |
+| Ubuntu 22.04 | ✅ Supported   |
+| Ubuntu 20.04 | ⚠ Limited     |
+| Debian 10    | ❌ Deprecated  |
+| OpenVZ       | ❌ Unsupported |
+| KVM          | ✅ Recommended |
+| VMware       | ✅ Recommended |
+
+---
+
+## ⚠ Notes
+
+* Recommended fresh VPS installation
+* Recommended minimum RAM 1GB
+* Domain required for XRAY TLS
+* Cloudflare supported
+* Enhanced payload supported
+
+---
+
+## ❤️ Credits
+
+* XTLS / Xray-core
+* BadVPN
+* WireGuard
+* acme.sh
+* NGINX

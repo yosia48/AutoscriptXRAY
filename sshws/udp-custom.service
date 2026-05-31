@@ -1,0 +1,15 @@
+[Unit]
+Description=UDP Custom Service
+After=network.target
+
+[Service]
+User=root
+Type=simple
+WorkingDirectory=/etc/udp-custom
+ExecStart=/usr/local/bin/udp-custom server -c /etc/udp-custom/config.json -exclude 7300
+Restart=always
+RestartSec=3s
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target
